@@ -13,6 +13,7 @@ const DEV27_CONFIG = {
 
 // Detect if config is set
 const isConfigured = () => {
-  return DEV27_CONFIG.supabaseUrl !== 'https://gykzewkfdlquyldioxch.supabase.co' &&
-    DEV27_CONFIG.supabaseAnonKey !== 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd5a3pld2tmZGxxdXlsZGlveGNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNjg4NzgsImV4cCI6MjA5NzY0NDg3OH0.ORWcpgESAQ3C19pHHiotDOzvyjDghkX6WTir77v6cGo';
+  return DEV27_CONFIG.supabaseUrl.startsWith('https://') &&
+    DEV27_CONFIG.supabaseUrl.includes('.supabase.co') &&
+    DEV27_CONFIG.supabaseAnonKey.length > 100;
 };
