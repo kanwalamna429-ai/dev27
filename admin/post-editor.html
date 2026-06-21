@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Editor | dev27 Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.7/quill.snow.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+<div class="admin-overlay" id="admin-overlay"></div>
+<aside class="admin-sidebar" id="admin-sidebar">
+  <div class="admin-sidebar__logo"><span>dev<span style="color:var(--primary)">27</span></span><em>Admin</em></div>
+  <nav class="admin-nav">
+    <div class="admin-nav__section">Main</div>
+    <a href="/admin/index.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+    <div class="admin-nav__section">Content</div>
+    <a href="/admin/posts.html" class="admin-nav__link active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Blog Posts</a>
+    <a href="/admin/downloads.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Downloads</a>
+    <div class="admin-nav__section">Monetization</div>
+    <a href="/admin/ads.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Ads Manager</a>
+    <div class="admin-nav__section">Configuration</div>
+    <a href="/admin/menus.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>Menus</a>
+    <a href="/admin/settings.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a>
+  </nav>
+  <div class="admin-sidebar__footer">
+    <div class="admin-user-avatar" id="user-avatar">A</div>
+    <div class="admin-user-info"><div class="admin-user-email" id="admin-user">Loading…</div></div>
+    <button class="admin-logout" id="logout-btn" title="Sign out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
+  </div>
+</aside>
+
+<div class="admin-main">
+  <header class="admin-header">
+    <button class="admin-header__toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <h1 class="admin-header__title" id="page-title">New Post</h1>
+    <div class="admin-header__actions">
+      <button class="theme-toggle" data-theme-toggle style="width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer"><span class="theme-icon">🌙</span></button>
+      <a href="/admin/posts.html" class="btn btn--ghost btn--sm">← All Posts</a>
+    </div>
+  </header>
+
+  <div class="admin-content">
+    <form id="post-form" novalidate>
+      <div class="editor-layout">
+        <!-- Main Editor Column -->
+        <div class="editor-main">
+          <!-- Title -->
+          <div class="form-section">
+            <div class="form-group">
+              <label class="form-label" for="post-title">Post Title <span class="required">*</span></label>
+              <input type="text" id="post-title" class="form-input" placeholder="Enter post title…" required style="font-size:1.25rem;font-weight:700">
+            </div>
+            <div class="form-group" style="margin-top:1rem">
+              <label class="form-label" for="post-slug">URL Slug</label>
+              <div style="display:flex;gap:.75rem;align-items:center">
+                <input type="text" id="post-slug" class="form-input" placeholder="auto-generated-from-title" style="font-family:var(--font-mono);font-size:.875rem">
+                <button type="button" id="regenerate-slug" class="btn btn--ghost btn--sm" style="flex-shrink:0">Regenerate</button>
+              </div>
+              <span class="form-hint">This will be the URL: /post.html?slug=<span id="slug-preview" style="font-weight:600">your-slug</span></span>
+            </div>
+          </div>
+
+          <!-- Featured Image -->
+          <div class="form-section">
+            <div class="form-section__title">📷 Featured Image</div>
+            <div class="form-group">
+              <label class="form-label">Upload Image</label>
+              <div class="dropzone" id="image-dropzone">
+                <div class="dropzone-icon">🖼️</div>
+                <div class="dropzone-text">Click or drag image here</div>
+                <div class="dropzone-hint">PNG, JPG, WebP — max 5MB</div>
+              </div>
+              <input type="file" id="image-file-input" accept="image/*" style="display:none">
+              <div class="image-preview" id="image-preview"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="featured-image-url">Or paste image URL</label>
+              <input type="url" id="featured-image-url" class="form-input" placeholder="https://example.com/image.jpg">
+            </div>
+          </div>
+
+          <!-- Content Editor -->
+          <div class="form-section">
+            <div class="form-section__title">✏️ Post Content</div>
+            <div class="editor-wrap">
+              <div id="quill-editor"></div>
+            </div>
+          </div>
+
+          <!-- Excerpt -->
+          <div class="form-section">
+            <div class="form-section__title">📝 Excerpt</div>
+            <div class="form-group">
+              <textarea id="post-excerpt" class="form-textarea" placeholder="Brief summary of the post (used in post cards and SEO). Leave blank to auto-generate." rows="3"></textarea>
+              <span class="form-hint">Ideal: 120–160 characters</span>
+            </div>
+          </div>
+
+          <!-- SEO -->
+          <div class="form-section">
+            <div class="form-section__title">🔍 SEO Settings</div>
+            <div class="form-group">
+              <label class="form-label" for="seo-title">SEO Title</label>
+              <input type="text" id="seo-title" class="form-input" placeholder="Defaults to post title if blank">
+              <div style="display:flex;justify-content:space-between;margin-top:.25rem">
+                <span class="form-hint">Ideal: 50–60 characters</span>
+                <span id="seo-title-count" style="font-size:.75rem;color:var(--text-muted)">0 / 60</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="seo-desc">Meta Description</label>
+              <textarea id="seo-desc" class="form-textarea" placeholder="Defaults to excerpt if blank" rows="2"></textarea>
+              <div style="display:flex;justify-content:space-between;margin-top:.25rem">
+                <span class="form-hint">Ideal: 120–160 characters</span>
+                <span id="seo-desc-count" style="font-size:.75rem;color:var(--text-muted)">0 / 160</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="seo-keywords">Focus Keywords</label>
+              <input type="text" id="seo-keywords" class="form-input" placeholder="keyword1, keyword2, keyword3">
+              <span class="form-hint">Comma-separated</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="og-image">OG Image URL</label>
+              <input type="url" id="og-image" class="form-input" placeholder="Social share image (defaults to featured image)">
+            </div>
+          </div>
+        </div>
+
+        <!-- Editor Sidebar -->
+        <div class="editor-sidebar">
+          <!-- Publish -->
+          <div class="publish-card">
+            <div class="publish-card__header">Publish Settings</div>
+            <div class="publish-card__body">
+              <div class="form-group">
+                <label class="form-label" for="post-status">Status</label>
+                <select id="post-status" class="form-select">
+                  <option value="draft">Draft</option>
+                  <option value="published">Published</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="post-category">Category</label>
+                <select id="post-category" class="form-select">
+                  <option value="">— No Category —</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="new-category">Create New Category</label>
+                <div style="display:flex;gap:.5rem">
+                  <input type="text" id="new-category" class="form-input" placeholder="Category name">
+                  <button type="button" id="add-category-btn" class="btn btn--secondary btn--sm" style="flex-shrink:0">Add</button>
+                </div>
+              </div>
+            </div>
+            <div class="publish-card__footer">
+              <button type="button" id="save-draft-btn" class="btn btn--ghost">Save Draft</button>
+              <button type="submit" id="publish-btn" class="btn btn--primary">Publish</button>
+            </div>
+          </div>
+
+          <!-- Preview -->
+          <div class="publish-card">
+            <div class="publish-card__header">Preview</div>
+            <div class="publish-card__body" style="padding:.75rem">
+              <div style="font-size:.8125rem;color:var(--text-muted);line-height:1.5">
+                <strong style="display:block;color:var(--text);font-size:.9rem;margin-bottom:.25rem" id="preview-title">Post Title</strong>
+                <span id="preview-slug" style="color:var(--accent)">slug</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Custom CTA Button -->
+          <div class="publish-card">
+            <div class="publish-card__header">Custom Button</div>
+            <div class="publish-card__body">
+              <div class="form-group">
+                <label class="form-label" for="cta-text">Button Text</label>
+                <input type="text" id="cta-text" class="form-input" placeholder="Download Now">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cta-url">Button URL</label>
+                <input type="url" id="cta-url" class="form-input" placeholder="https://example.com">
+              </div>
+              <span class="form-hint">Appended to post content</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<script src="/js/config.js"></script>
+<script src="/js/supabase-client.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin-common.js"></script>
+<script>
+let quill, editingId = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  document.getElementById('admin-overlay').addEventListener('click', () => { document.getElementById('admin-sidebar').classList.remove('open'); document.getElementById('admin-overlay').classList.remove('visible'); });
+  document.getElementById('sidebar-toggle').addEventListener('click', () => { document.getElementById('admin-sidebar').classList.toggle('open'); document.getElementById('admin-overlay').classList.toggle('visible'); });
+  document.getElementById('logout-btn').addEventListener('click', DEV27_AUTH.logout);
+  const user = await DEV27_AUTH.getUser();
+  if (!user) return;
+  document.getElementById('admin-user').textContent = user.email;
+  document.getElementById('user-avatar').textContent = user.email[0].toUpperCase();
+
+  // Init Quill
+  quill = new Quill('#quill-editor', {
+    theme: 'snow',
+    placeholder: 'Write your post content here…',
+    modules: {
+      toolbar: [
+        [{ header: [1, 2, 3, 4, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ color: [] }, { background: [] }],
+        ['blockquote', 'code-block'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{ indent: '-1' }, { indent: '+1' }],
+        ['link', 'image', 'video'],
+        [{ align: [] }],
+        ['clean']
+      ]
+    }
+  });
+
+  // SEO char counts
+  document.getElementById('seo-title').addEventListener('input', function() {
+    document.getElementById('seo-title-count').textContent = `${this.value.length} / 60`;
+    document.getElementById('seo-title-count').style.color = this.value.length > 60 ? 'var(--danger)' : 'var(--text-muted)';
+  });
+  document.getElementById('seo-desc').addEventListener('input', function() {
+    document.getElementById('seo-desc-count').textContent = `${this.value.length} / 160`;
+    document.getElementById('seo-desc-count').style.color = this.value.length > 160 ? 'var(--danger)' : 'var(--text-muted)';
+  });
+
+  // Auto-slug from title
+  const titleInput = document.getElementById('post-title');
+  const slugInput = document.getElementById('post-slug');
+  titleInput.addEventListener('input', () => {
+    if (!editingId || !slugInput.dataset.manual) {
+      const slug = DEV27_ADMIN.slugify(titleInput.value);
+      slugInput.value = slug;
+      document.getElementById('slug-preview').textContent = slug || 'your-slug';
+      document.getElementById('preview-title').textContent = titleInput.value || 'Post Title';
+    }
+  });
+  slugInput.addEventListener('input', () => {
+    slugInput.dataset.manual = '1';
+    document.getElementById('slug-preview').textContent = slugInput.value || 'your-slug';
+  });
+  document.getElementById('regenerate-slug').addEventListener('click', () => {
+    const slug = DEV27_ADMIN.slugify(titleInput.value);
+    slugInput.value = slug;
+    slugInput.dataset.manual = '';
+    document.getElementById('slug-preview').textContent = slug;
+  });
+
+  // Image upload
+  DEV27_ADMIN.initImageUpload({
+    dropzoneId: 'image-dropzone',
+    previewId: 'image-preview',
+    inputId: 'image-file-input',
+    urlInputId: 'featured-image-url',
+    bucket: 'images'
+  });
+
+  // URL input preview
+  document.getElementById('featured-image-url').addEventListener('input', function() {
+    const preview = document.getElementById('image-preview');
+    if (this.value) {
+      preview.innerHTML = `<img src="${this.value}" alt="Preview" style="max-width:100%;max-height:200px;border-radius:8px;margin-top:.75rem">`;
+    } else {
+      preview.innerHTML = '';
+    }
+  });
+
+  // Load categories
+  await loadCategories();
+
+  // Add category
+  document.getElementById('add-category-btn').addEventListener('click', async () => {
+    const name = document.getElementById('new-category').value.trim();
+    if (!name) return;
+    const sb = getSupabase();
+    const slug = DEV27_ADMIN.slugify(name);
+    const { data, error } = await sb.from('categories').insert({ name, slug }).select().single();
+    if (error) { DEV27_ADMIN.toast('Could not create category: ' + error.message, 'error'); return; }
+    document.getElementById('new-category').value = '';
+    DEV27_ADMIN.toast('Category created!');
+    const opt = document.createElement('option');
+    opt.value = data.id;
+    opt.textContent = data.name;
+    opt.selected = true;
+    document.getElementById('post-category').appendChild(opt);
+  });
+
+  // Load existing post for edit
+  const params = new URLSearchParams(window.location.search);
+  editingId = params.get('id');
+  if (editingId) {
+    document.getElementById('page-title').textContent = 'Edit Post';
+    await loadPost(editingId);
+  }
+
+  // Form submit
+  document.getElementById('post-form').addEventListener('submit', (e) => { e.preventDefault(); savePost('published'); });
+  document.getElementById('save-draft-btn').addEventListener('click', () => savePost('draft'));
+  document.getElementById('publish-btn').addEventListener('click', (e) => { e.preventDefault(); savePost('published'); });
+});
+
+const loadCategories = async () => {
+  const sb = getSupabase();
+  if (!sb) return;
+  const { data } = await sb.from('categories').select('id, name').order('name');
+  const select = document.getElementById('post-category');
+  if (data) {
+    data.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = c.name;
+      select.appendChild(opt);
+    });
+  }
+};
+
+const loadPost = async (id) => {
+  const sb = getSupabase();
+  const { data: post, error } = await sb.from('posts').select('*').eq('id', id).single();
+  if (error || !post) { DEV27_ADMIN.toast('Post not found', 'error'); return; }
+
+  document.getElementById('post-title').value = post.title;
+  document.getElementById('post-slug').value = post.slug;
+  document.getElementById('slug-preview').textContent = post.slug;
+  document.getElementById('preview-title').textContent = post.title;
+  document.getElementById('post-excerpt').value = post.excerpt || '';
+  document.getElementById('featured-image-url').value = post.featured_image || '';
+  document.getElementById('seo-title').value = post.seo_title || '';
+  document.getElementById('seo-desc').value = post.seo_description || '';
+  document.getElementById('seo-keywords').value = post.seo_keywords || '';
+  document.getElementById('og-image').value = post.og_image || '';
+  document.getElementById('post-status').value = post.status || 'draft';
+  if (post.category_id) document.getElementById('post-category').value = post.category_id;
+  if (post.featured_image) {
+    document.getElementById('image-preview').innerHTML = `<img src="${post.featured_image}" alt="Preview" style="max-width:100%;max-height:200px;border-radius:8px;margin-top:.75rem">`;
+  }
+  if (post.content) quill.root.innerHTML = post.content;
+};
+
+const savePost = async (status) => {
+  const title = document.getElementById('post-title').value.trim();
+  if (!title) { DEV27_ADMIN.toast('Title is required', 'error'); document.getElementById('post-title').classList.add('error'); return; }
+
+  const slug = document.getElementById('post-slug').value.trim() || DEV27_ADMIN.slugify(title);
+  const content = quill.root.innerHTML;
+  const excerpt = document.getElementById('post-excerpt').value.trim() ||
+    quill.getText().substring(0, 160).trim();
+  const featuredImage = document.getElementById('featured-image-url').value.trim();
+  const categoryId = document.getElementById('post-category').value || null;
+  const ctaText = document.getElementById('cta-text').value.trim();
+  const ctaUrl = document.getElementById('cta-url').value.trim();
+
+  let finalContent = content;
+  if (ctaText && ctaUrl) {
+    finalContent += `<p><a href="${ctaUrl}" class="btn btn--primary" style="display:inline-flex;align-items:center;gap:.5rem;padding:.75em 1.5em;background:var(--primary);color:#fff;border-radius:8px;font-weight:700;text-decoration:none">${ctaText}</a></p>`;
+  }
+
+  const payload = {
+    title,
+    slug,
+    content: finalContent,
+    excerpt,
+    featured_image: featuredImage || null,
+    status,
+    category_id: categoryId,
+    seo_title: document.getElementById('seo-title').value.trim() || null,
+    seo_description: document.getElementById('seo-desc').value.trim() || null,
+    seo_keywords: document.getElementById('seo-keywords').value.trim() || null,
+    og_image: document.getElementById('og-image').value.trim() || null,
+    updated_at: new Date().toISOString()
+  };
+
+  const sb = getSupabase();
+  if (!sb) { DEV27_ADMIN.toast('Supabase not configured', 'error'); return; }
+
+  const saveBtn = document.getElementById('publish-btn');
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Saving…';
+
+  let error;
+  if (editingId) {
+    ({ error } = await sb.from('posts').update(payload).eq('id', editingId));
+  } else {
+    payload.created_at = new Date().toISOString();
+    payload.views = 0;
+    const { data, error: insertError } = await sb.from('posts').insert(payload).select().single();
+    error = insertError;
+    if (data) editingId = data.id;
+  }
+
+  saveBtn.disabled = false;
+  saveBtn.textContent = 'Publish';
+
+  if (error) {
+    DEV27_ADMIN.toast('Error saving post: ' + error.message, 'error');
+    return;
+  }
+
+  DEV27_ADMIN.toast(status === 'published' ? 'Post published!' : 'Draft saved!');
+  if (status === 'published') {
+    setTimeout(() => window.location.href = '/admin/posts.html', 1200);
+  }
+};
+</script>
+</body>
+</html>

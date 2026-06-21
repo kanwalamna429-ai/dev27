@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Downloads - Templates &amp; Themes | dev27</title>
+  <meta name="description" content="Download free website templates, themes, and developer resources from dev27.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<div id="code-inject-head"></div>
+
+<header class="site-header" id="site-header">
+  <div class="container">
+    <a href="/" class="site-logo">dev<span>27</span></a>
+    <nav class="site-nav" id="site-nav">
+      <div id="header-nav"></div>
+    </nav>
+    <div class="header-actions">
+      <button class="search-trigger" id="search-trigger" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode">
+        <span class="theme-icon">🌙</span>
+      </button>
+      <button class="hamburger" id="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="search-overlay" id="search-overlay">
+  <div class="search-overlay-inner">
+    <div class="search-overlay-box">
+      <input type="search" id="search-overlay-input" placeholder="Search...">
+      <button id="search-overlay-btn">Search</button>
+    </div>
+  </div>
+  <button class="search-close" id="search-close">✕</button>
+</div>
+
+<main>
+  <!-- Hero -->
+  <div class="category-hero">
+    <div class="container">
+      <h1>Free Downloads</h1>
+      <p>Premium templates, themes &amp; developer resources — completely free</p>
+    </div>
+  </div>
+
+  <section class="posts-section">
+    <div class="container">
+      <div id="before-content-ad" data-ad="before_content"></div>
+
+      <div class="content-with-sidebar">
+        <div>
+          <div class="section-header">
+            <h2 class="section-title">All Downloads</h2>
+            <span id="download-count" style="color:var(--text-muted);font-size:.875rem"></span>
+          </div>
+          <div class="downloads-grid" id="downloads-grid">
+            <!-- Loaded by JS -->
+          </div>
+        </div>
+        <aside class="sidebar">
+          <div class="sidebar-widget">
+            <h3 class="sidebar-widget__title">Search Downloads</h3>
+            <div class="sidebar-search">
+              <input type="search" id="dl-search" placeholder="Filter downloads..." class="form-input" aria-label="Search downloads">
+            </div>
+          </div>
+          <div class="sidebar-widget" style="padding:.5rem">
+            <div data-ad="sidebar"></div>
+          </div>
+          <div class="sidebar-widget">
+            <h3 class="sidebar-widget__title">File Types</h3>
+            <ul class="footer-nav-list" id="file-type-filters">
+              <li><a href="#" class="sidebar-cat-link active" data-filter="">All Types</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div style="padding:1.5rem 0 0;text-align:center" data-ad="footer"></div>
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">dev<span>27</span></a>
+        <p class="footer-tagline" data-site-tagline>Templates, Themes &amp; Dev Resources</p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__title">Navigation</h4>
+        <ul class="footer-nav-list" id="footer-nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/category.html">Blog</a></li>
+          <li><a href="/downloads.html">Downloads</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© <span id="footer-year"></span> <span data-site-name>dev27</span>. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<div id="code-inject-footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/config.js"></script>
+<script src="/js/supabase-client.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/seo.js"></script>
+<script src="/js/ads.js"></script>
+<script src="/js/menu.js"></script>
+<script src="/js/download.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+  document.getElementById('search-trigger').addEventListener('click', () => document.getElementById('search-overlay').classList.add('open'));
+  document.getElementById('search-close').addEventListener('click', () => document.getElementById('search-overlay').classList.remove('open'));
+  document.getElementById('search-overlay-btn').addEventListener('click', () => { const q = document.getElementById('search-overlay-input').value.trim(); if (q) window.location.href = `/search.html?q=${encodeURIComponent(q)}`; });
+
+  await DEV27_DOWNLOAD.loadDownloadsList();
+
+  // Client-side search filter
+  const searchInput = document.getElementById('dl-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase();
+      document.querySelectorAll('.download-card').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(q) ? '' : 'none';
+      });
+    });
+  }
+
+  // Count
+  const countEl = document.getElementById('download-count');
+  if (countEl) {
+    const cards = document.querySelectorAll('.download-card');
+    if (cards.length) countEl.textContent = `${cards.length} items`;
+  }
+});
+</script>
+</body>
+</html>

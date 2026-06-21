@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search | dev27</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<header class="site-header" id="site-header">
+  <div class="container">
+    <a href="/" class="site-logo">dev<span>27</span></a>
+    <nav class="site-nav" id="site-nav">
+      <div id="header-nav"></div>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode">
+        <span class="theme-icon">🌙</span>
+      </button>
+      <button class="hamburger" id="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="search-section">
+  <div class="container">
+    <h1 style="margin-bottom:1.5rem">Search Results</h1>
+
+    <form class="search-box" action="/search.html" method="get">
+      <input type="search" name="q" id="search-input" class="search-input" placeholder="Search posts, templates..." aria-label="Search">
+      <button type="submit" class="search-btn">Search</button>
+    </form>
+
+    <p style="color:var(--text-muted);margin-bottom:2rem;font-size:.9375rem">
+      Results for: <strong id="search-query-display"></strong>
+    </p>
+
+    <div class="posts-grid" id="posts-grid">
+      <!-- Results loaded by JS -->
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p class="footer-copy">© <span id="footer-year"></span> <span data-site-name>dev27</span>. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/config.js"></script>
+<script src="/js/supabase-client.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/ads.js"></script>
+<script src="/js/menu.js"></script>
+<script src="/js/blog.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+  await DEV27_BLOG.loadSearch();
+});
+</script>
+</body>
+</html>

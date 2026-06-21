@@ -1,0 +1,8 @@
+# Cloudflare Pages Redirects
+# Redirect /admin to /admin/index.html
+/admin    /admin/index.html    301
+/admin/   /admin/index.html    301
+
+# SPA fallbacks — redirect to closest page if slug-based
+# Remove if you want 404s for missing pages
+# /*    /index.html    200

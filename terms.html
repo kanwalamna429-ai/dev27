@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Use | dev27</title>
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <div class="container">
+    <a href="/" class="site-logo">dev<span>27</span></a>
+    <nav class="site-nav" id="site-nav"><div id="header-nav"></div></nav>
+    <div class="header-actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode"><span class="theme-icon">🌙</span></button>
+      <button class="hamburger" id="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main style="padding:4rem 0">
+  <div class="container container--narrow">
+    <h1 style="margin-bottom:2rem">Terms of Use</h1>
+    <div class="prose">
+      <p><em>Last updated: <span id="update-date"></span></em></p>
+      <p>By accessing or using <strong data-site-name>dev27</strong>, you agree to be bound by these Terms of Use.</p>
+      <h2>Use of Content</h2>
+      <p>All content on this site — including blog posts, templates, and downloadable files — is provided for personal and commercial use under the terms specified with each download. Unless otherwise noted, you may not redistribute, resell, or sublicense our content.</p>
+      <h2>Downloads</h2>
+      <p>Free downloads are provided "as is" without warranty of any kind. We are not responsible for any issues arising from the use of downloaded files. Always scan downloaded files for malware before use.</p>
+      <h2>Intellectual Property</h2>
+      <p>The dev27 name, logo, and site design are our intellectual property. Third-party trademarks remain the property of their respective owners.</p>
+      <h2>Advertising</h2>
+      <p>This site displays advertisements. We are not responsible for the content of third-party advertisements. Clicking on advertisements is entirely at your own discretion.</p>
+      <h2>Disclaimer</h2>
+      <p>We make no guarantees about the accuracy, completeness, or reliability of any content on this site. Use all content at your own risk.</p>
+      <h2>Changes to Terms</h2>
+      <p>We reserve the right to update these Terms at any time. Continued use of the site constitutes acceptance of any changes.</p>
+      <h2>Contact</h2>
+      <p>For questions about these Terms, please contact us through our website.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p class="footer-copy">© <span id="footer-year"></span> <span data-site-name>dev27</span>. All rights reserved.</p>
+      <div class="footer-links"><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/config.js"></script>
+<script src="/js/supabase-client.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/menu.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+  document.getElementById('update-date').textContent = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+  window.addEventListener('scroll', () => document.getElementById('site-header').classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+});
+</script>
+</body>
+</html>

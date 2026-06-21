@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | dev27 Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+
+<!-- Sidebar Overlay (mobile) -->
+<div class="admin-overlay" id="admin-overlay"></div>
+
+<!-- Sidebar -->
+<aside class="admin-sidebar" id="admin-sidebar">
+  <div class="admin-sidebar__logo">
+    <span>dev<span style="color:var(--primary)">27</span></span>
+    <em>Admin</em>
+  </div>
+  <nav class="admin-nav" aria-label="Admin navigation">
+    <div class="admin-nav__section">Main</div>
+    <a href="/admin/index.html" class="admin-nav__link active">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </a>
+    <div class="admin-nav__section">Content</div>
+    <a href="/admin/posts.html" class="admin-nav__link">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Blog Posts
+    </a>
+    <a href="/admin/downloads.html" class="admin-nav__link">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Downloads
+    </a>
+    <div class="admin-nav__section">Monetization</div>
+    <a href="/admin/ads.html" class="admin-nav__link">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      Ads Manager
+    </a>
+    <div class="admin-nav__section">Configuration</div>
+    <a href="/admin/menus.html" class="admin-nav__link">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      Menus
+    </a>
+    <a href="/admin/settings.html" class="admin-nav__link">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Settings
+    </a>
+  </nav>
+  <div class="admin-sidebar__footer">
+    <div class="admin-user-avatar" id="user-avatar">A</div>
+    <div class="admin-user-info">
+      <div class="admin-user-email" id="admin-user">Loading…</div>
+    </div>
+    <button class="admin-logout" id="logout-btn" title="Sign out">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+    </button>
+  </div>
+</aside>
+
+<!-- Main -->
+<div class="admin-main">
+  <!-- Admin Header -->
+  <header class="admin-header">
+    <button class="admin-header__toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <h1 class="admin-header__title">Dashboard</h1>
+    <div class="admin-header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode" style="width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer">
+        <span class="theme-icon">🌙</span>
+      </button>
+      <a href="/" target="_blank" class="admin-site-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Site
+      </a>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="admin-content">
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--blue">📝</div>
+        <div class="stat-card__value" id="stat-posts">—</div>
+        <div class="stat-card__label">Published Posts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--green">⬇</div>
+        <div class="stat-card__value" id="stat-downloads">—</div>
+        <div class="stat-card__label">Downloads Available</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--orange">👁</div>
+        <div class="stat-card__value" id="stat-views">—</div>
+        <div class="stat-card__label">Total Post Views</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--cyan">📥</div>
+        <div class="stat-card__value" id="stat-dl-count">—</div>
+        <div class="stat-card__label">Total Downloads</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="admin-cards" style="margin-bottom:2rem">
+      <div class="admin-card">
+        <div class="admin-card__header">
+          <h3 class="admin-card__title">Quick Actions</h3>
+        </div>
+        <div class="admin-card__body" style="display:flex;flex-wrap:wrap;gap:.75rem">
+          <a href="/admin/post-editor.html" class="btn btn--primary">+ New Post</a>
+          <a href="/admin/download-editor.html" class="btn btn--secondary">+ New Download</a>
+          <a href="/admin/ads.html" class="btn btn--ghost">Manage Ads</a>
+          <a href="/admin/settings.html" class="btn btn--ghost">Settings</a>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card__header">
+          <h3 class="admin-card__title">Site Status</h3>
+        </div>
+        <div class="admin-card__body" style="display:flex;flex-direction:column;gap:.75rem">
+          <div style="display:flex;justify-content:space-between;font-size:.9rem">
+            <span style="color:var(--text-muted)">Supabase</span>
+            <span id="status-supabase" class="badge badge--draft">Checking…</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:.9rem">
+            <span style="color:var(--text-muted)">Theme</span>
+            <span class="badge badge--published">Active</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:.9rem">
+            <span style="color:var(--text-muted)">Version</span>
+            <span style="font-size:.8125rem;color:var(--text-muted)">dev27 v1.0.0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Posts -->
+    <div class="admin-table-wrap" style="margin-bottom:1.5rem">
+      <div class="admin-card__header" style="padding:1rem 1.25rem;border-bottom:1px solid var(--border)">
+        <h3 class="admin-card__title">Recent Posts</h3>
+        <a href="/admin/posts.html" style="font-size:.875rem;color:var(--primary)">View all →</a>
+      </div>
+      <div id="recent-posts-table">
+        <div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading…</div>
+      </div>
+    </div>
+
+    <!-- Recent Downloads -->
+    <div class="admin-table-wrap">
+      <div class="admin-card__header" style="padding:1rem 1.25rem;border-bottom:1px solid var(--border)">
+        <h3 class="admin-card__title">Recent Downloads</h3>
+        <a href="/admin/downloads.html" style="font-size:.875rem;color:var(--primary)">View all →</a>
+      </div>
+      <div id="recent-downloads-table">
+        <div style="text-align:center;padding:2rem;color:var(--text-muted)">Loading…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/config.js"></script>
+<script src="/js/supabase-client.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin-common.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  // Sidebar toggle (mobile)
+  const sidebar = document.getElementById('admin-sidebar');
+  const overlay = document.getElementById('admin-overlay');
+  document.getElementById('sidebar-toggle').addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('visible');
+  });
+  overlay.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('visible'); });
+  document.getElementById('logout-btn').addEventListener('click', DEV27_AUTH.logout);
+
+  // Auth
+  const user = await DEV27_AUTH.getUser();
+  if (!user) return;
+  document.getElementById('admin-user').textContent = user.email;
+  document.getElementById('user-avatar').textContent = user.email[0].toUpperCase();
+
+  // Status check
+  const sb = getSupabase();
+  document.getElementById('status-supabase').textContent = sb ? 'Connected' : 'Not configured';
+  document.getElementById('status-supabase').className = sb ? 'badge badge--published' : 'badge badge--draft';
+
+  // Load stats
+  await DEV27_ADMIN.loadStats();
+
+  // Downloads count
+  if (sb) {
+    const { data: dlData } = await sb.from('downloads').select('download_count').eq('status', 'published');
+    const totalDl = (dlData || []).reduce((s, d) => s + (d.download_count || 0), 0);
+    document.getElementById('stat-dl-count').textContent = totalDl.toLocaleString();
+
+    // Recent posts
+    const { data: posts } = await sb.from('posts')
+      .select('id, title, slug, status, created_at')
+      .order('created_at', { ascending: false })
+      .limit(5);
+
+    document.getElementById('recent-posts-table').innerHTML = posts?.length ? `
+      <table class="admin-table">
+        <thead><tr><th>Title</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody>${posts.map(p => `
+          <tr>
+            <td class="table-title">${p.title}</td>
+            <td><span class="badge badge--${p.status}">${p.status}</span></td>
+            <td>${DEV27_ADMIN.formatDate(p.created_at)}</td>
+            <td class="table-actions">
+              <a href="/admin/post-editor.html?id=${p.id}" class="btn btn--secondary btn--sm">Edit</a>
+              <a href="/post.html?slug=${p.slug}" target="_blank" class="btn btn--ghost btn--sm">View</a>
+            </td>
+          </tr>`).join('')}
+        </tbody>
+      </table>` : '<div class="table-empty"><div class="table-empty-icon">📝</div><p>No posts yet. <a href="/admin/post-editor.html">Create your first post</a></p></div>';
+
+    // Recent downloads
+    const { data: dls } = await sb.from('downloads')
+      .select('id, title, slug, status, download_count, created_at')
+      .order('created_at', { ascending: false })
+      .limit(5);
+
+    document.getElementById('recent-downloads-table').innerHTML = dls?.length ? `
+      <table class="admin-table">
+        <thead><tr><th>Title</th><th>Status</th><th>Downloads</th><th>Actions</th></tr></thead>
+        <tbody>${dls.map(d => `
+          <tr>
+            <td class="table-title">${d.title}</td>
+            <td><span class="badge badge--${d.status}">${d.status}</span></td>
+            <td>${(d.download_count || 0).toLocaleString()}</td>
+            <td class="table-actions">
+              <a href="/admin/download-editor.html?id=${d.id}" class="btn btn--secondary btn--sm">Edit</a>
+            </td>
+          </tr>`).join('')}
+        </tbody>
+      </table>` : '<div class="table-empty"><div class="table-empty-icon">📦</div><p>No downloads yet. <a href="/admin/download-editor.html">Add your first download</a></p></div>';
+  }
+});
+</script>
+</body>
+</html>

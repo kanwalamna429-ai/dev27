@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Editor | dev27 Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.7/quill.snow.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+<div class="admin-overlay" id="admin-overlay"></div>
+<aside class="admin-sidebar" id="admin-sidebar">
+  <div class="admin-sidebar__logo"><span>dev<span style="color:var(--primary)">27</span></span><em>Admin</em></div>
+  <nav class="admin-nav">
+    <div class="admin-nav__section">Main</div>
+    <a href="/admin/index.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+    <div class="admin-nav__section">Content</div>
+    <a href="/admin/posts.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Blog Posts</a>
+    <a href="/admin/downloads.html" class="admin-nav__link active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Downloads</a>
+    <div class="admin-nav__section">Monetization</div>
+    <a href="/admin/ads.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Ads Manager</a>
+    <div class="admin-nav__section">Configuration</div>
+    <a href="/admin/menus.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>Menus</a>
+    <a href="/admin/settings.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a>
+  </nav>
+  <div class="admin-sidebar__footer">
+    <div class="admin-user-avatar" id="user-avatar">A</div>
+    <div class="admin-user-info"><div class="admin-user-email" id="admin-user">Loading…</div></div>
+    <button class="admin-logout" id="logout-btn" title="Sign out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
+  </div>
+</aside>
+
+<div class="admin-main">
+  <header class="admin-header">
+    <button class="admin-header__toggle" id="sidebar-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <h1 class="admin-header__title" id="page-title">New Download</h1>
+    <div class="admin-header__actions">
+      <button class="theme-toggle" data-theme-toggle style="width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer"><span class="theme-icon">🌙</span></button>
+      <a href="/admin/downloads.html" class="btn btn--ghost btn--sm">← All Downloads</a>
+    </div>
+  </header>
+
+  <div class="admin-content">
+    <form id="dl-form" novalidate>
+      <div class="editor-layout">
+        <div class="editor-main">
+          <!-- Basic Info -->
+          <div class="form-section">
+            <div class="form-section__title">📦 Basic Information</div>
+            <div class="form-group">
+              <label class="form-label" for="dl-title">Title <span class="required">*</span></label>
+              <input type="text" id="dl-title" class="form-input" placeholder="Template / Theme name" required style="font-size:1.125rem;font-weight:700">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="dl-slug">URL Slug</label>
+              <input type="text" id="dl-slug" class="form-input" placeholder="auto-generated" style="font-family:var(--font-mono);font-size:.875rem">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="dl-desc">Short Description</label>
+              <textarea id="dl-desc" class="form-textarea" rows="2" placeholder="Brief description (shown in cards)"></textarea>
+            </div>
+          </div>
+
+          <!-- Featured Image -->
+          <div class="form-section">
+            <div class="form-section__title">🖼️ Featured Image</div>
+            <div class="dropzone" id="image-dropzone">
+              <div class="dropzone-icon">📷</div>
+              <div class="dropzone-text">Click or drag image here</div>
+              <div class="dropzone-hint">PNG, JPG, WebP</div>
+            </div>
+            <input type="file" id="image-file-input" accept="image/*" style="display:none">
+            <div class="image-preview" id="image-preview"></div>
+            <div class="form-group" style="margin-top:1rem">
+              <label class="form-label" for="featured-image-url">Or image URL</label>
+              <input type="url" id="featured-image-url" class="form-input" placeholder="https://...">
+            </div>
+          </div>
+
+          <!-- Preview Images -->
+          <div class="form-section">
+            <div class="form-section__title">🖼️ Preview Images (optional)</div>
+            <div id="preview-images-list" style="display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:1rem"></div>
+            <div style="display:flex;gap:.75rem">
+              <input type="url" id="preview-img-url" class="form-input" placeholder="Image URL…">
+              <button type="button" id="add-preview-img" class="btn btn--secondary btn--sm" style="flex-shrink:0">Add</button>
+            </div>
+            <input type="hidden" id="preview-images-data" value="[]">
+          </div>
+
+          <!-- Full Description / Content -->
+          <div class="form-section">
+            <div class="form-section__title">✏️ Full Description (optional)</div>
+            <div class="editor-wrap">
+              <div id="quill-editor"></div>
+            </div>
+          </div>
+
+          <!-- SEO -->
+          <div class="form-section">
+            <div class="form-section__title">🔍 SEO Settings</div>
+            <div class="form-group">
+              <label class="form-label" for="seo-title">SEO Title</label>
+              <input type="text" id="seo-title" class="form-input" placeholder="Defaults to item title">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="seo-desc">Meta Description</label>
+              <textarea id="seo-desc" class="form-textarea" rows="2" placeholder="Defaults to description"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="editor-sidebar">
+          <!-- Publish -->
+          <div class="publish-card">
+            <div class="publish-card__header">Publish Settings</div>
+            <div class="publish-card__body">
+              <div class="form-group">
+                <label class="form-label" for="dl-status">Status</label>
+                <select id="dl-status" class="form-select">
+                  <option value="draft">Draft</option>
+                  <option value="published">Published</option>
+                </select>
+              </div>
+            </div>
+            <div class="publish-card__footer">
+              <button type="button" id="save-draft-btn" class="btn btn--ghost">Save Draft</button>
+              <button type="submit" id="publish-btn" class="btn btn--primary">Publish</button>
+            </div>
+          </div>
+
+          <!-- File Upload -->
+          <div class="publish-card">
+            <div class="publish-card__header">📁 Download File</div>
+            <div class="publish-card__body">
+              <div class="dropzone" id="file-dropzone" style="padding:1.25rem">
+                <div class="dropzone-icon">📂</div>
+                <div class="dropzone-text" style="font-size:.875rem">Click to upload file</div>
+                <div class="dropzone-hint">ZIP, PDF, PSD, etc.</div>
+              </div>
+              <input type="file" id="file-input" style="display:none">
+              <div class="form-group" style="margin-top:1rem">
+                <label class="form-label" for="file-url">Or file URL</label>
+                <input type="url" id="file-url" class="form-input" placeholder="Direct download URL">
+              </div>
+              <div class="form-row form-row--2" style="margin-top:.75rem">
+                <div class="form-group">
+                  <label class="form-label" for="file-name">File Name</label>
+                  <input type="text" id="file-name" class="form-input" placeholder="template.zip">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="file-size">File Size</label>
+                  <input type="text" id="file-size" class="form-input" placeholder="2.4 MB">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="file-type">File Type</label>
+                <input type="text" id="file-type" class="form-input" placeholder="ZIP, PDF, HTML…">
+              </div>
+            </div>
+          </div>
+
+          <!-- Timer Settings -->
+          <div class="publish-card">
+            <div class="publish-card__header">⏱ Timer Settings</div>
+            <div class="publish-card__body">
+              <div class="form-toggle">
+                <label class="toggle-switch">
+                  <input type="checkbox" id="timer-enabled" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+                <label class="toggle-label" for="timer-enabled">Enable Timer</label>
+              </div>
+              <div id="timer-options" style="margin-top:1rem;display:flex;flex-direction:column;gap:.875rem">
+                <div class="form-group">
+                  <label class="form-label" for="timer-duration">Timer Duration (seconds)</label>
+                  <input type="number" id="timer-duration" class="form-input" value="15" min="5" max="120">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="timer-steps">Number of Timer Steps</label>
+                  <select id="timer-steps" class="form-select">
+                    <option value="1">1 step</option>
+                    <option value="2" selected>2 steps</option>
+                    <option value="3">3 steps</option>
+                  </select>
+                  <span class="form-hint">Each step adds one page view before download</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<script src="/js/config.js"></script>
+<script src="/js/supabase-client.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin-common.js"></script>
+<script>
+let quill, editingId = null;
+let previewImages = [];
+
+document.addEventListener('DOMContentLoaded', async () => {
+  document.getElementById('admin-overlay').addEventListener('click', () => { document.getElementById('admin-sidebar').classList.remove('open'); document.getElementById('admin-overlay').classList.remove('visible'); });
+  document.getElementById('sidebar-toggle').addEventListener('click', () => { document.getElementById('admin-sidebar').classList.toggle('open'); document.getElementById('admin-overlay').classList.toggle('visible'); });
+  document.getElementById('logout-btn').addEventListener('click', DEV27_AUTH.logout);
+  const user = await DEV27_AUTH.getUser();
+  if (!user) return;
+  document.getElementById('admin-user').textContent = user.email;
+  document.getElementById('user-avatar').textContent = user.email[0].toUpperCase();
+
+  // Init Quill
+  quill = new Quill('#quill-editor', {
+    theme: 'snow',
+    placeholder: 'Describe this download in detail…',
+    modules: { toolbar: [[{ header: [2,3,false] }], ['bold','italic','underline'], ['blockquote','code-block'], [{ list:'ordered' },{ list:'bullet' }], ['link','image'], ['clean']] }
+  });
+
+  // Auto slug
+  document.getElementById('dl-title').addEventListener('input', function() {
+    if (!editingId) document.getElementById('dl-slug').value = DEV27_ADMIN.slugify(this.value);
+  });
+
+  // Image upload
+  DEV27_ADMIN.initImageUpload({ dropzoneId: 'image-dropzone', previewId: 'image-preview', inputId: 'image-file-input', urlInputId: 'featured-image-url', bucket: 'images' });
+  document.getElementById('featured-image-url').addEventListener('input', function() {
+    const preview = document.getElementById('image-preview');
+    if (this.value) preview.innerHTML = `<img src="${this.value}" alt="Preview" style="max-width:100%;max-height:180px;border-radius:8px;margin-top:.75rem">`;
+    else preview.innerHTML = '';
+  });
+
+  // File upload
+  const fileDropzone = document.getElementById('file-dropzone');
+  const fileInput = document.getElementById('file-input');
+  fileDropzone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    fileDropzone.querySelector('.dropzone-text').textContent = 'Uploading…';
+    try {
+      const result = await DEV27_ADMIN.uploadDownloadFile(file);
+      document.getElementById('file-url').value = result.url;
+      document.getElementById('file-name').value = result.name;
+      document.getElementById('file-size').value = result.size;
+      const ext = file.name.split('.').pop().toUpperCase();
+      document.getElementById('file-type').value = ext;
+      fileDropzone.querySelector('.dropzone-text').textContent = `✓ ${result.name}`;
+      DEV27_ADMIN.toast('File uploaded!');
+    } catch (e) {
+      DEV27_ADMIN.toast('Upload failed: ' + e.message, 'error');
+      fileDropzone.querySelector('.dropzone-text').textContent = 'Click to upload file';
+    }
+  });
+
+  // Preview images
+  document.getElementById('add-preview-img').addEventListener('click', () => {
+    const url = document.getElementById('preview-img-url').value.trim();
+    if (!url) return;
+    previewImages.push(url);
+    renderPreviewImages();
+    document.getElementById('preview-img-url').value = '';
+  });
+
+  // Timer toggle
+  document.getElementById('timer-enabled').addEventListener('change', function() {
+    document.getElementById('timer-options').style.display = this.checked ? 'flex' : 'none';
+  });
+
+  // Load edit
+  const params = new URLSearchParams(window.location.search);
+  editingId = params.get('id');
+  if (editingId) {
+    document.getElementById('page-title').textContent = 'Edit Download';
+    await loadItem(editingId);
+  }
+
+  document.getElementById('dl-form').addEventListener('submit', e => { e.preventDefault(); saveItem('published'); });
+  document.getElementById('save-draft-btn').addEventListener('click', () => saveItem('draft'));
+  document.getElementById('publish-btn').addEventListener('click', e => { e.preventDefault(); saveItem('published'); });
+});
+
+const renderPreviewImages = () => {
+  const container = document.getElementById('preview-images-list');
+  document.getElementById('preview-images-data').value = JSON.stringify(previewImages);
+  container.innerHTML = previewImages.map((url, i) => `
+    <div style="position:relative;display:inline-block">
+      <img src="${url}" style="width:100px;height:75px;object-fit:cover;border-radius:6px;border:1px solid var(--border)">
+      <button type="button" onclick="removePreviewImg(${i})" style="position:absolute;top:-6px;right:-6px;background:var(--danger);color:#fff;border:none;border-radius:50%;width:20px;height:20px;font-size:.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+    </div>`).join('');
+};
+
+const removePreviewImg = (i) => {
+  previewImages.splice(i, 1);
+  renderPreviewImages();
+};
+
+const loadItem = async (id) => {
+  const sb = getSupabase();
+  const { data: item, error } = await sb.from('downloads').select('*').eq('id', id).single();
+  if (error || !item) { DEV27_ADMIN.toast('Item not found', 'error'); return; }
+  document.getElementById('dl-title').value = item.title;
+  document.getElementById('dl-slug').value = item.slug;
+  document.getElementById('dl-desc').value = item.description || '';
+  document.getElementById('featured-image-url').value = item.featured_image || '';
+  document.getElementById('file-url').value = item.file_url || '';
+  document.getElementById('file-name').value = item.file_name || '';
+  document.getElementById('file-size').value = item.file_size || '';
+  document.getElementById('file-type').value = item.file_type || '';
+  document.getElementById('dl-status').value = item.status;
+  document.getElementById('timer-enabled').checked = item.timer_enabled;
+  document.getElementById('timer-duration').value = item.timer_duration || 15;
+  document.getElementById('timer-steps').value = item.timer_steps || 2;
+  document.getElementById('seo-title').value = item.seo_title || '';
+  document.getElementById('seo-desc').value = item.seo_description || '';
+  if (!item.timer_enabled) document.getElementById('timer-options').style.display = 'none';
+  if (item.featured_image) document.getElementById('image-preview').innerHTML = `<img src="${item.featured_image}" style="max-width:100%;max-height:180px;border-radius:8px;margin-top:.75rem">`;
+  if (item.content) quill.root.innerHTML = item.content;
+  if (item.preview_images) { previewImages = Array.isArray(item.preview_images) ? item.preview_images : JSON.parse(item.preview_images || '[]'); renderPreviewImages(); }
+};
+
+const saveItem = async (status) => {
+  const title = document.getElementById('dl-title').value.trim();
+  if (!title) { DEV27_ADMIN.toast('Title is required', 'error'); return; }
+  const slug = document.getElementById('dl-slug').value.trim() || DEV27_ADMIN.slugify(title);
+  const payload = {
+    title, slug,
+    description: document.getElementById('dl-desc').value.trim() || null,
+    content: quill.root.innerHTML || null,
+    featured_image: document.getElementById('featured-image-url').value.trim() || null,
+    file_url: document.getElementById('file-url').value.trim() || null,
+    file_name: document.getElementById('file-name').value.trim() || null,
+    file_size: document.getElementById('file-size').value.trim() || null,
+    file_type: document.getElementById('file-type').value.trim() || null,
+    status,
+    timer_enabled: document.getElementById('timer-enabled').checked,
+    timer_duration: parseInt(document.getElementById('timer-duration').value) || 15,
+    timer_steps: parseInt(document.getElementById('timer-steps').value) || 2,
+    seo_title: document.getElementById('seo-title').value.trim() || null,
+    seo_description: document.getElementById('seo-desc').value.trim() || null,
+    preview_images: previewImages,
+    updated_at: new Date().toISOString()
+  };
+  const sb = getSupabase();
+  if (!sb) { DEV27_ADMIN.toast('Supabase not configured', 'error'); return; }
+  const saveBtn = document.getElementById('publish-btn');
+  saveBtn.disabled = true; saveBtn.textContent = 'Saving…';
+  let error;
+  if (editingId) {
+    ({ error } = await sb.from('downloads').update(payload).eq('id', editingId));
+  } else {
+    payload.created_at = new Date().toISOString();
+    payload.download_count = 0;
+    const { data, error: e } = await sb.from('downloads').insert(payload).select().single();
+    error = e;
+    if (data) editingId = data.id;
+  }
+  saveBtn.disabled = false; saveBtn.textContent = 'Publish';
+  if (error) { DEV27_ADMIN.toast('Error: ' + error.message, 'error'); return; }
+  DEV27_ADMIN.toast(status === 'published' ? 'Download published!' : 'Draft saved!');
+  if (status === 'published') setTimeout(() => window.location.href = '/admin/downloads.html', 1200);
+};
+</script>
+</body>
+</html>

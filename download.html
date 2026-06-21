@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download | dev27</title>
+  <meta name="description" content="">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="product">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .download-loading, .download-not-found { text-align: center; padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+<div id="code-inject-head"></div>
+
+<header class="site-header" id="site-header">
+  <div class="container">
+    <a href="/" class="site-logo">dev<span>27</span></a>
+    <nav class="site-nav" id="site-nav">
+      <div id="header-nav"></div>
+    </nav>
+    <div class="header-actions">
+      <button class="search-trigger" id="search-trigger" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode">
+        <span class="theme-icon">🌙</span>
+      </button>
+      <button class="hamburger" id="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="search-overlay" id="search-overlay">
+  <div class="search-overlay-inner">
+    <div class="search-overlay-box">
+      <input type="search" id="search-overlay-input" placeholder="Search posts...">
+      <button id="search-overlay-btn">Search</button>
+    </div>
+  </div>
+  <button class="search-close" id="search-close">✕</button>
+</div>
+
+<main class="download-page">
+  <div class="container container--narrow">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" style="margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--text-muted)">
+      <a href="/" style="color:var(--text-muted)">Home</a>
+      <span>›</span>
+      <a href="/downloads.html" style="color:var(--text-muted)">Downloads</a>
+      <span>›</span>
+      <span id="breadcrumb-item">Item</span>
+    </nav>
+
+    <!-- Main download container -->
+    <div id="download-container">
+      <div class="download-loading">
+        <div class="spinner"></div>
+        <p>Loading download...</p>
+      </div>
+    </div>
+
+    <!-- Sidebar ad on desktop -->
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div style="padding:1.5rem 0 0;text-align:center" data-ad="footer"></div>
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">dev<span>27</span></a>
+        <p class="footer-tagline" data-site-tagline>Templates, Themes &amp; Dev Resources</p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__title">Navigation</h4>
+        <ul class="footer-nav-list" id="footer-nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/category.html">Blog</a></li>
+          <li><a href="/downloads.html">Downloads</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__title">Legal</h4>
+        <ul class="footer-nav-list">
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© <span id="footer-year"></span> <span data-site-name>dev27</span>. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="code-inject-footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/config.js"></script>
+<script src="/js/supabase-client.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/seo.js"></script>
+<script src="/js/share.js"></script>
+<script src="/js/ads.js"></script>
+<script src="/js/menu.js"></script>
+<script src="/js/download.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+  const overlay = document.getElementById('search-overlay');
+  document.getElementById('search-trigger').addEventListener('click', () => overlay.classList.add('open'));
+  document.getElementById('search-close').addEventListener('click', () => overlay.classList.remove('open'));
+  document.getElementById('search-overlay-btn').addEventListener('click', () => { const q = document.getElementById('search-overlay-input').value.trim(); if (q) window.location.href = `/search.html?q=${encodeURIComponent(q)}`; });
+
+  await DEV27_DOWNLOAD.loadItem();
+
+  // Update breadcrumb
+  const title = document.querySelector('.download-title');
+  if (title) document.getElementById('breadcrumb-item').textContent = title.textContent.trim().substring(0, 50);
+
+  const sb = getSupabase();
+  if (sb) {
+    const { data } = await sb.from('code_injections').select('*').eq('enabled', true);
+    (data || []).forEach(item => {
+      const el = document.getElementById(`code-inject-${item.location}`);
+      if (el) el.innerHTML = item.code || '';
+    });
+  }
+});
+</script>
+</body>
+</html>

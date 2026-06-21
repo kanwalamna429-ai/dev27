@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ads Manager | dev27 Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+<div class="admin-overlay" id="admin-overlay"></div>
+<aside class="admin-sidebar" id="admin-sidebar">
+  <div class="admin-sidebar__logo"><span>dev<span style="color:var(--primary)">27</span></span><em>Admin</em></div>
+  <nav class="admin-nav">
+    <div class="admin-nav__section">Main</div>
+    <a href="/admin/index.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+    <div class="admin-nav__section">Content</div>
+    <a href="/admin/posts.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Blog Posts</a>
+    <a href="/admin/downloads.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Downloads</a>
+    <div class="admin-nav__section">Monetization</div>
+    <a href="/admin/ads.html" class="admin-nav__link active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Ads Manager</a>
+    <div class="admin-nav__section">Configuration</div>
+    <a href="/admin/menus.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>Menus</a>
+    <a href="/admin/settings.html" class="admin-nav__link"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a>
+  </nav>
+  <div class="admin-sidebar__footer">
+    <div class="admin-user-avatar" id="user-avatar">A</div>
+    <div class="admin-user-info"><div class="admin-user-email" id="admin-user">Loading…</div></div>
+    <button class="admin-logout" id="logout-btn" title="Sign out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
+  </div>
+</aside>
+
+<div class="admin-main">
+  <header class="admin-header">
+    <button class="admin-header__toggle" id="sidebar-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <h1 class="admin-header__title">Ads Manager</h1>
+    <div class="admin-header__actions">
+      <button class="theme-toggle" data-theme-toggle style="width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer"><span class="theme-icon">🌙</span></button>
+    </div>
+  </header>
+
+  <div class="admin-content">
+    <p style="color:var(--text-muted);margin-bottom:2rem;font-size:.9375rem">
+      Paste your ad network code (AdSense, Media.net, Ezoic, etc.) into each slot. Changes take effect immediately. Supports any ad network script.
+    </p>
+
+    <!-- Ad Slot Tabs -->
+    <div class="ad-location-tabs" id="ad-tabs"></div>
+
+    <!-- Ad Form -->
+    <div class="form-section" id="ad-form-area" style="max-width:860px">
+      <div id="ad-form-content">
+        <div style="text-align:center;padding:3rem;color:var(--text-muted)">
+          <div class="spinner" style="margin:0 auto 1rem"></div>Loading…
+        </div>
+      </div>
+    </div>
+
+    <!-- Code Injections Section -->
+    <div class="form-section" style="max-width:860px;margin-top:2rem">
+      <div class="form-section__title">💉 Header / Footer Code Injections</div>
+      <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:1.5rem">Insert global code like analytics, pixel tracking, or custom scripts into specific positions on every page.</p>
+      <div id="injections-form"></div>
+      <div style="margin-top:1.5rem">
+        <button id="save-injections-btn" class="btn btn--primary">Save Code Injections</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/config.js"></script>
+<script src="/js/supabase-client.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin-common.js"></script>
+<script>
+const AD_LOCATIONS = [
+  { id: 'header', label: '📌 Header (above nav)', desc: 'Displayed at the top of every page header' },
+  { id: 'footer', label: '📌 Footer', desc: 'Displayed at the bottom of every page' },
+  { id: 'sidebar', label: '📐 Sidebar', desc: 'In the right sidebar widget' },
+  { id: 'before_content', label: '⬆ Before Content', desc: 'Directly before the main post/download content' },
+  { id: 'after_content', label: '⬇ After Content', desc: 'Directly after the main post/download content' },
+  { id: 'in_content_1', label: '📄 In-Content #1', desc: 'Injected ~30% into post content' },
+  { id: 'in_content_2', label: '📄 In-Content #2', desc: 'Injected ~65% into post content' },
+  { id: 'timer_ad', label: '⏱ Timer Ad', desc: 'Shown on the download timer page' },
+  { id: 'sticky_bottom', label: '📌 Sticky Bottom', desc: 'Fixed bar at the bottom of the screen' }
+];
+
+const CODE_INJECTIONS = [
+  { id: 'head', label: '&lt;head&gt; — Before &lt;/head&gt;', desc: 'Analytics, pixels, meta tags', icon: '🔝' },
+  { id: 'body_start', label: '&lt;body&gt; — After opening tag', desc: 'GTM noscript, etc.', icon: '▶' },
+  { id: 'body_end', label: '&lt;/body&gt; — Before closing tag', desc: 'Deferred scripts, chat widgets', icon: '⏹' }
+];
+
+let allAds = {};
+let activeLocation = AD_LOCATIONS[0].id;
+
+const renderTabs = () => {
+  const tabs = document.getElementById('ad-tabs');
+  tabs.innerHTML = AD_LOCATIONS.map(loc => `
+    <button class="ad-tab ${loc.id === activeLocation ? 'active' : ''}" data-loc="${loc.id}">${loc.label}</button>
+  `).join('');
+  tabs.querySelectorAll('.ad-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      activeLocation = tab.dataset.loc;
+      renderTabs();
+      renderAdForm();
+    });
+  });
+};
+
+const renderAdForm = () => {
+  const loc = AD_LOCATIONS.find(l => l.id === activeLocation);
+  const existing = allAds[activeLocation] || {};
+  document.getElementById('ad-form-content').innerHTML = `
+    <div class="form-section__title">${loc.label}</div>
+    <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:1.25rem">${loc.desc}</p>
+    <div class="form-group">
+      <div class="form-toggle" style="margin-bottom:1rem">
+        <label class="toggle-switch">
+          <input type="checkbox" id="ad-enabled" ${existing.enabled !== false ? 'checked' : ''}>
+          <span class="toggle-slider"></span>
+        </label>
+        <label class="toggle-label" for="ad-enabled">Enable this ad slot</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="ad-name">Ad Name / Label</label>
+      <input type="text" id="ad-name" class="form-input" value="${existing.name || ''}" placeholder="e.g. AdSense — Sidebar Banner">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="ad-code">Ad Code</label>
+      <textarea id="ad-code" class="form-textarea code-textarea" rows="10" placeholder="Paste your ad network code here (AdSense, Media.net, Ezoic, etc.)…">${existing.code || ''}</textarea>
+      <span class="form-hint">Supports any HTML/JavaScript ad code</span>
+    </div>
+    <div style="display:flex;gap:.75rem;margin-top:1rem">
+      <button id="save-ad-btn" class="btn btn--primary">Save Ad Slot</button>
+      <button id="clear-ad-btn" class="btn btn--ghost">Clear Code</button>
+    </div>`;
+
+  document.getElementById('save-ad-btn').addEventListener('click', saveAd);
+  document.getElementById('clear-ad-btn').addEventListener('click', () => {
+    document.getElementById('ad-code').value = '';
+  });
+};
+
+const saveAd = async () => {
+  const sb = getSupabase();
+  if (!sb) return;
+  const payload = {
+    location: activeLocation,
+    name: document.getElementById('ad-name').value.trim() || activeLocation,
+    code: document.getElementById('ad-code').value,
+    enabled: document.getElementById('ad-enabled').checked
+  };
+  const existing = allAds[activeLocation];
+  let error;
+  if (existing?.id) {
+    ({ error } = await sb.from('ads').update(payload).eq('id', existing.id));
+  } else {
+    const { data, error: e } = await sb.from('ads').insert(payload).select().single();
+    error = e;
+    if (data) allAds[activeLocation] = data;
+  }
+  if (error) { DEV27_ADMIN.toast('Error: ' + error.message, 'error'); return; }
+  if (existing?.id) allAds[activeLocation] = { ...existing, ...payload };
+  localStorage.removeItem('dev27_ads_cache');
+  DEV27_ADMIN.toast('Ad slot saved!');
+};
+
+const renderInjectionsForm = (injections) => {
+  const container = document.getElementById('injections-form');
+  container.innerHTML = CODE_INJECTIONS.map(loc => {
+    const existing = injections.find(i => i.location === loc.id) || {};
+    return `
+      <div style="margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
+          <div>
+            <strong style="font-size:.9375rem">${loc.icon} ${loc.label}</strong>
+            <span style="font-size:.8125rem;color:var(--text-muted);margin-left:.5rem">${loc.desc}</span>
+          </div>
+          <div class="form-toggle">
+            <label class="toggle-switch">
+              <input type="checkbox" id="inject-enabled-${loc.id}" ${existing.enabled !== false ? 'checked' : ''}>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <textarea id="inject-code-${loc.id}" class="form-textarea code-textarea" rows="5" placeholder="Paste code here…">${existing.code || ''}</textarea>
+      </div>`;
+  }).join('');
+};
+
+const saveInjections = async () => {
+  const sb = getSupabase();
+  if (!sb) return;
+  for (const loc of CODE_INJECTIONS) {
+    const code = document.getElementById(`inject-code-${loc.id}`).value;
+    const enabled = document.getElementById(`inject-enabled-${loc.id}`).checked;
+    const payload = { location: loc.id, code, enabled, name: loc.id, updated_at: new Date().toISOString() };
+    await sb.from('code_injections').upsert(payload, { onConflict: 'location' });
+  }
+  DEV27_ADMIN.toast('Code injections saved!');
+};
+
+document.addEventListener('DOMContentLoaded', async () => {
+  document.getElementById('admin-overlay').addEventListener('click', () => { document.getElementById('admin-sidebar').classList.remove('open'); document.getElementById('admin-overlay').classList.remove('visible'); });
+  document.getElementById('sidebar-toggle').addEventListener('click', () => { document.getElementById('admin-sidebar').classList.toggle('open'); document.getElementById('admin-overlay').classList.toggle('visible'); });
+  document.getElementById('logout-btn').addEventListener('click', DEV27_AUTH.logout);
+  const user = await DEV27_AUTH.getUser();
+  if (!user) return;
+  document.getElementById('admin-user').textContent = user.email;
+  document.getElementById('user-avatar').textContent = user.email[0].toUpperCase();
+
+  const sb = getSupabase();
+  if (!sb) return;
+
+  // Load ads
+  const { data: ads } = await sb.from('ads').select('*');
+  (ads || []).forEach(ad => { allAds[ad.location] = ad; });
+
+  // Load injections
+  const { data: injections } = await sb.from('code_injections').select('*');
+  renderInjectionsForm(injections || []);
+  document.getElementById('save-injections-btn').addEventListener('click', saveInjections);
+
+  renderTabs();
+  renderAdForm();
+});
+</script>
+</body>
+</html>

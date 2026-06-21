@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dev27 - Templates, Themes &amp; Dev Resources</title>
+  <meta name="description" content="dev27 - Download premium templates, themes, and developer resources for free.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="dev27">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="/">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<!-- Code Injection: Head End -->
+<div id="code-inject-head"></div>
+
+<!-- Header -->
+<header class="site-header" id="site-header">
+  <div class="container">
+    <a href="/" class="site-logo" aria-label="dev27 Home">
+      dev<span>27</span>
+    </a>
+
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <div id="header-nav"></div>
+    </nav>
+
+    <div class="header-actions">
+      <button class="search-trigger" id="search-trigger" aria-label="Search" title="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode">
+        <span class="theme-icon">🌙</span>
+      </button>
+      <button class="hamburger" id="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="header-ad" data-ad="header" id="header-ad-slot"></div>
+  </div>
+</header>
+
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay" role="dialog" aria-label="Search">
+  <div class="search-overlay-inner">
+    <div class="search-overlay-box">
+      <input type="search" id="search-overlay-input" placeholder="Search posts, templates..." aria-label="Search">
+      <button id="search-overlay-btn">Search</button>
+    </div>
+    <p style="font-size:.875rem;color:var(--text-muted);">Press Enter or click Search</p>
+  </div>
+  <button class="search-close" id="search-close" aria-label="Close search">✕</button>
+</div>
+
+<main>
+  <!-- Hero Banner -->
+  <section class="site-hero" id="site-hero" style="display:none">
+    <div class="container" style="position:relative;z-index:1">
+      <h1 data-site-name>dev27</h1>
+      <p data-site-tagline>Templates, Themes &amp; Dev Resources</p>
+    </div>
+  </section>
+
+  <!-- Featured Post -->
+  <section class="featured-post-section" id="featured-post-section">
+    <div class="container">
+      <div id="featured-post" hidden></div>
+    </div>
+  </section>
+
+  <!-- Ad: Before Content -->
+  <div class="container">
+    <div id="before-content-ad" data-ad="before_content"></div>
+  </div>
+
+  <!-- Posts + Sidebar -->
+  <section class="posts-section">
+    <div class="container">
+      <div class="content-with-sidebar">
+        <div>
+          <div class="section-header">
+            <h2 class="section-title">Latest Posts</h2>
+            <a href="/category.html" class="btn btn--ghost btn--sm">View All →</a>
+          </div>
+          <div class="posts-grid" id="posts-grid">
+            <!-- Posts loaded by JS -->
+          </div>
+          <div id="pagination"></div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" aria-label="Sidebar">
+          <!-- Search Widget -->
+          <div class="sidebar-widget">
+            <h3 class="sidebar-widget__title">Search</h3>
+            <form class="sidebar-search" action="/search.html" method="get">
+              <input type="search" name="q" placeholder="Search..." class="form-input" aria-label="Search">
+              <button type="submit" class="btn btn--primary">Go</button>
+            </form>
+          </div>
+
+          <!-- Sidebar Ad -->
+          <div class="sidebar-widget" style="padding:.5rem" data-ad="sidebar" id="sidebar-ad-slot">
+            <div data-ad="sidebar"></div>
+          </div>
+
+          <!-- Categories -->
+          <div class="sidebar-widget">
+            <h3 class="sidebar-widget__title">Categories</h3>
+            <ul id="sidebar-categories" class="footer-nav-list">
+              <li><a href="/category.html" class="sidebar-cat-link">Loading…</a></li>
+            </ul>
+          </div>
+
+          <!-- Recent Posts -->
+          <div class="sidebar-widget">
+            <h3 class="sidebar-widget__title">Recent Posts</h3>
+            <ul id="sidebar-recent" class="sidebar-recent">
+              <li class="sidebar-recent__item skeleton">
+                <div class="skeleton-image" style="width:72px;height:56px;border-radius:6px;"></div>
+                <div style="flex:1"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Downloads Widget -->
+          <div class="sidebar-widget">
+            <h3 class="sidebar-widget__title">Free Downloads</h3>
+            <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:1rem;">Browse our library of free templates and themes.</p>
+            <a href="/downloads.html" class="btn btn--primary" style="width:100%;justify-content:center">Browse Downloads</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <!-- Footer Ad -->
+    <div style="padding:1.5rem 0 0;text-align:center" data-ad="footer"></div>
+
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">dev<span>27</span></a>
+        <p class="footer-tagline" data-site-tagline>Templates, Themes &amp; Dev Resources</p>
+        <div data-ad="footer_brand"></div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__title">Navigation</h4>
+        <ul class="footer-nav-list" id="footer-nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/category.html">Blog</a></li>
+          <li><a href="/downloads.html">Downloads</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__title">Resources</h4>
+        <ul class="footer-nav-list" id="footer-nav-2">
+          <li><a href="/downloads.html">Templates</a></li>
+          <li><a href="/downloads.html">Themes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__title">Legal</h4>
+        <ul class="footer-nav-list">
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Use</a></li>
+          <li><a href="/dmca.html">DMCA</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy" id="footer-copy">© <span id="footer-year"></span> <span data-site-name>dev27</span>. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="/admin/index.html">Admin</a>
+        <a href="/sitemap.xml">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Code Injection: Footer -->
+<div id="code-inject-footer"></div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/config.js"></script>
+<script src="/js/supabase-client.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/seo.js"></script>
+<script src="/js/share.js"></script>
+<script src="/js/ads.js"></script>
+<script src="/js/menu.js"></script>
+<script src="/js/blog.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+  // Header scroll effect
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
+
+  // Search overlay
+  const overlay = document.getElementById('search-overlay');
+  const overlayInput = document.getElementById('search-overlay-input');
+  document.getElementById('search-trigger').addEventListener('click', () => {
+    overlay.classList.add('open');
+    setTimeout(() => overlayInput.focus(), 100);
+  });
+  document.getElementById('search-close').addEventListener('click', () => overlay.classList.remove('open'));
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+  document.getElementById('search-overlay-btn').addEventListener('click', () => {
+    const q = overlayInput.value.trim();
+    if (q) window.location.href = `/search.html?q=${encodeURIComponent(q)}`;
+  });
+  overlayInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const q = overlayInput.value.trim();
+      if (q) window.location.href = `/search.html?q=${encodeURIComponent(q)}`;
+    }
+    if (e.key === 'Escape') overlay.classList.remove('open');
+  });
+
+  // Load content
+  await DEV27_BLOG.loadHome();
+  await DEV27_BLOG.loadSidebar();
+  await DEV27_SEO.applyHome(DEV27_THEME.settings);
+
+  // Load code injections
+  await loadCodeInjections();
+});
+
+const loadCodeInjections = async () => {
+  const sb = getSupabase();
+  if (!sb) return;
+  const { data } = await sb.from('code_injections').select('*').eq('enabled', true);
+  if (!data) return;
+  data.forEach(item => {
+    const el = document.getElementById(`code-inject-${item.location}`);
+    if (el) el.innerHTML = item.code || '';
+  });
+};
+</script>
+</body>
+</html>
