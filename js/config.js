@@ -3,8 +3,8 @@
 // Go to: https://app.supabase.com → Your Project → Settings → API
 
 const DEV27_CONFIG = {
-  supabaseUrl: 'YOUR_SUPABASE_URL',       // e.g. https://xxxx.supabase.co
-  supabaseAnonKey: 'YOUR_SUPABASE_ANON_KEY', // Your project anon/public key
+  supabaseUrl: 'https://gykzewkfdlquyldioxch.supabase.co',       // e.g. https://xxxx.supabase.co
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd5a3pld2tmZGxxdXlsZGlveGNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNjg4NzgsImV4cCI6MjA5NzY0NDg3OH0.ORWcpgESAQ3C19pHHiotDOzvyjDghkX6WTir77v6cGo', // Your project anon/public key
   siteName: 'dev27',
   siteUrl: typeof window !== 'undefined' ? window.location.origin : '',
   adminPath: '/admin/',
@@ -13,6 +13,6 @@ const DEV27_CONFIG = {
 
 // Detect if config is set
 const isConfigured = () => {
-  return DEV27_CONFIG.supabaseUrl !== 'YOUR_SUPABASE_URL' &&
-    DEV27_CONFIG.supabaseAnonKey !== 'YOUR_SUPABASE_ANON_KEY';
+  return DEV27_CONFIG.supabaseUrl !== 'https://gykzewkfdlquyldioxch.supabase.co' &&
+    DEV27_CONFIG.supabaseAnonKey !== 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd5a3pld2tmZGxxdXlsZGlveGNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNjg4NzgsImV4cCI6MjA5NzY0NDg3OH0.ORWcpgESAQ3C19pHHiotDOzvyjDghkX6WTir77v6cGo';
 };
