@@ -10,115 +10,141 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/admin.css">
-  <!-- Anti-flicker: apply dark mode before first paint -->
   <script>try{var __m=localStorage.getItem('dev27_theme_mode');if(__m==='dark'||(__m===null&&window.matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .login-page-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-alt);
+      padding: 1rem;
+    }
+  </style>
 </head>
-<body class="admin-login-page">
-
-<div class="login-card">
-  <div class="login-logo">
-    <div class="login-logo-text">dev<span>27</span></div>
-    <p class="login-tagline">Content Management System</p>
-  </div>
-
-  <h1 class="login-title">Sign In to Admin</h1>
-
-  <div class="login-error" id="login-error"></div>
-
-  <form id="login-form" class="admin-form" novalidate>
-    <div class="form-group">
-      <label class="form-label" for="email">Email Address <span class="required">*</span></label>
-      <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required autocomplete="email">
+<body>
+<div class="login-page-wrap">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-text">dev<span>27</span></div>
+      <p class="login-tagline">Content Management System</p>
     </div>
-    <div class="form-group">
-      <label class="form-label" for="password">Password <span class="required">*</span></label>
-      <div style="position:relative">
-        <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
-        <button type="button" id="toggle-password" style="position:absolute;right:.875rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1rem" aria-label="Show password">👁</button>
+
+    <h1 class="login-title">Sign In to Admin</h1>
+
+    <div class="login-error" id="login-error" style="display:none"></div>
+
+    <form id="login-form" class="admin-form" novalidate autocomplete="on">
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input type="email" id="email" name="email" class="form-input"
+               placeholder="you@example.com" required autocomplete="username">
       </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <div style="position:relative">
+          <input type="password" id="password" name="password" class="form-input"
+                 placeholder="••••••••" required autocomplete="current-password">
+          <button type="button" id="toggle-pw"
+                  style="position:absolute;right:.875rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1.1rem;padding:0;line-height:1"
+                  aria-label="Toggle password">👁</button>
+        </div>
+      </div>
+      <button type="submit" id="login-btn" class="btn btn--primary btn--lg"
+              style="width:100%;justify-content:center;margin-top:.25rem">
+        <span id="btn-label">Sign In</span>
+        <svg id="btn-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             width="18" height="18" style="display:none;animation:spin .7s linear infinite;flex-shrink:0">
+          <path d="M21 12a9 9 0 11-6.219-8.56"/>
+        </svg>
+      </button>
+    </form>
+
+    <p style="margin-top:1.5rem;text-align:center;font-size:.875rem">
+      <a href="/" style="color:var(--text-muted)">← Back to website</a>
+    </p>
+
+    <div id="cfg-warn" style="display:none;margin-top:1.25rem;padding:.875rem 1rem;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:8px;font-size:.85rem;color:#D97706">
+      ⚠️ Supabase not configured. Edit <code>js/config.js</code>.
     </div>
-    <button type="submit" class="btn btn--primary btn--lg" id="login-btn" style="width:100%;justify-content:center;margin-top:.5rem">
-      <span id="login-btn-text">Sign In</span>
-      <span id="login-spinner" style="display:none">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="animation:spin .7s linear infinite"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg>
-      </span>
-    </button>
-  </form>
-
-  <div style="margin-top:1.5rem;text-align:center">
-    <a href="/" style="color:var(--text-muted);font-size:.9rem">← Back to website</a>
-  </div>
-
-  <!-- Config warning -->
-  <div id="config-warning" style="display:none;margin-top:1.5rem;padding:.875rem 1rem;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:8px;font-size:.85rem;color:#D97706">
-    ⚠️ Supabase not configured. Edit <code>js/config.js</code> with your Supabase URL and anon key.
   </div>
 </div>
 
+<!-- Load Supabase + config ONLY — no theme.js, no auth.js auto-init -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/js/config.js?v=2"></script>
+<script src="/js/config.js?v=3"></script>
 <script src="/js/supabase-client.js"></script>
-<script src="/js/theme.js"></script>
-<script src="/js/auth.js"></script>
 <script>
-// Wire up the form immediately — no async delays, no hiding
-const loginForm  = document.getElementById('login-form');
-const loginError = document.getElementById('login-error');
-const loginBtn   = document.getElementById('login-btn');
-const btnText    = document.getElementById('login-btn-text');
-const spinner    = document.getElementById('login-spinner');
+(function () {
+  // Clear any leftover auth redirect flags from previous sessions
+  try { sessionStorage.removeItem('dev27_auth_redirect_fail'); } catch(e){}
+  try { localStorage.removeItem('dev27_admin_return'); } catch(e){}
 
-// Show Supabase warning if not configured
-if (!isConfigured()) {
-  document.getElementById('config-warning').style.display = 'block';
-}
-
-// Toggle password visibility
-document.getElementById('toggle-password').addEventListener('click', () => {
-  const pw = document.getElementById('password');
-  pw.type = pw.type === 'password' ? 'text' : 'password';
-});
-
-loginForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email    = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-
-  if (!email || !password) {
-    loginError.textContent = 'Please enter your email and password.';
-    loginError.style.display = 'block';
-    return;
+  // Show config warning if Supabase isn't set up
+  if (!isConfigured()) {
+    document.getElementById('cfg-warn').style.display = 'block';
   }
 
-  loginBtn.disabled = true;
-  btnText.textContent = 'Signing in…';
-  spinner.style.display = 'inline-flex';
-  loginError.style.display = 'none';
+  const form    = document.getElementById('login-form');
+  const errEl   = document.getElementById('login-error');
+  const btn     = document.getElementById('login-btn');
+  const label   = document.getElementById('btn-label');
+  const spinner = document.getElementById('btn-spinner');
+  const togglePw = document.getElementById('toggle-pw');
 
-  const { error } = await DEV27_AUTH.login(email, password);
-  if (error) {
-    loginError.textContent = error.message || 'Invalid email or password.';
-    loginError.style.display = 'block';
-    loginBtn.disabled = false;
-    btnText.textContent = 'Sign In';
+  togglePw.addEventListener('click', function () {
+    var pw = document.getElementById('password');
+    pw.type = pw.type === 'password' ? 'text' : 'password';
+  });
+
+  function showError(msg) {
+    errEl.textContent = msg;
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    label.textContent = 'Sign In';
     spinner.style.display = 'none';
   }
-});
 
-// Silent background session check — redirect to admin if already logged in
-// Runs after form is wired, so user never sees a blank page
-(async () => {
-  // Clear any stale auth-fail flag
-  sessionStorage.removeItem(DEV27_AUTH.AUTH_FAIL_KEY);
-  if (!isConfigured()) return;
-  try {
-    const session = await DEV27_AUTH.getSession();
-    if (session) window.location.replace('/admin/index.html');
-  } catch (e) { /* ignore — just show the form */ }
-})();
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    var email    = document.getElementById('email').value.trim();
+    var password = document.getElementById('password').value;
+
+    if (!email || !password) {
+      showError('Please enter your email and password.');
+      return;
+    }
+
+    btn.disabled = true;
+    label.textContent = 'Signing in…';
+    spinner.style.display = 'inline-block';
+    errEl.style.display = 'none';
+
+    var sb = getSupabase();
+    if (!sb) {
+      showError('Supabase not configured. Edit js/config.js.');
+      return;
+    }
+
+    try {
+      var result = await sb.auth.signInWithPassword({ email: email, password: password });
+      if (result.error) {
+        showError(result.error.message || 'Invalid email or password.');
+        return;
+      }
+      if (result.data && result.data.session) {
+        // Successful login — go to dashboard
+        window.location.href = '/admin/index.html';
+      } else {
+        showError('Login failed. Please try again.');
+      }
+    } catch (err) {
+      showError('Login failed. Please check your connection and try again.');
+    }
+  });
+}());
 </script>
-<style>
-@keyframes spin { to { transform: rotate(360deg); } }
-</style>
 </body>
 </html>
