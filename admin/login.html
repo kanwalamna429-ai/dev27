@@ -77,9 +77,13 @@
 <script src="/js/supabase-client.js"></script>
 <script>
 (function () {
-  // Clear any leftover auth redirect flags from previous sessions
-  try { sessionStorage.removeItem('dev27_auth_redirect_fail'); } catch(e){}
-  try { localStorage.removeItem('dev27_admin_return'); } catch(e){}
+  // Clear ALL redirect/loop tracking flags so a stale cached admin page
+  // can never keep bouncing the user back here indefinitely
+  try {
+    sessionStorage.removeItem('dev27_redirect_count');
+    sessionStorage.removeItem('dev27_auth_redirect_fail');
+    localStorage.removeItem('dev27_admin_return');
+  } catch(e){}
 
   // Show config warning if Supabase isn't set up
   if (!isConfigured()) {
