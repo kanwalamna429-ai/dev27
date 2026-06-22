@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Login | dev27</title>
   <meta name="robots" content="noindex, nofollow">
-  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
@@ -57,26 +57,36 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/js/config.js"></script>
+<script src="/js/config.js?v=2"></script>
 <script src="/js/supabase-client.js"></script>
 <script src="/js/theme.js"></script>
 <script src="/js/auth.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
+  const card = document.querySelector('.login-card');
+
   // Show warning if not configured
   if (!isConfigured()) {
     document.getElementById('config-warning').style.display = 'block';
-  }
-
-  // Check if already logged in — redirect silently before revealing card
-  const session = await DEV27_AUTH.getSession();
-  if (session) {
-    window.location.replace('/admin/index.html');
+    card.style.opacity = '1';
     return;
   }
 
-  // Reveal card now that we know the user must log in
-  document.querySelector('.login-card').style.opacity = '1';
+  // If we landed here because admin auth failed, clear stale session and show form immediately
+  const authFailed = sessionStorage.getItem(DEV27_AUTH.AUTH_FAIL_KEY);
+  if (authFailed) {
+    sessionStorage.removeItem(DEV27_AUTH.AUTH_FAIL_KEY);
+    card.style.opacity = '1';
+    // Setup form below — skip session check entirely
+  } else {
+    // Check if already logged in — redirect silently before revealing card
+    const session = await DEV27_AUTH.getSession();
+    if (session) {
+      window.location.replace('/admin/index.html');
+      return;
+    }
+    card.style.opacity = '1';
+  }
 
   const form = document.getElementById('login-form');
   const errorEl = document.getElementById('login-error');
