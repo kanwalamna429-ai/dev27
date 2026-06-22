@@ -106,8 +106,11 @@ main { flex: 1; }
   gap: 2.5rem;
   grid-template-columns: 1fr;
 }
+@media (min-width: 768px) {
+  .content-with-sidebar { grid-template-columns: 1fr 300px; }
+}
 @media (min-width: 1024px) {
-  .content-with-sidebar { grid-template-columns: 1fr 320px; }
+  .content-with-sidebar { grid-template-columns: 1fr 340px; }
 }
 
 /* ============================================================

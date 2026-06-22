@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="/css/admin.css">
   <!-- Anti-flicker: apply dark mode before first paint -->
   <script>try{var __m=localStorage.getItem('dev27_theme_mode');if(__m==='dark'||(__m===null&&window.matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
-  <style>.login-card{opacity:0;transition:opacity .15s ease}</style>
 </head>
 <body class="admin-login-page">
 
@@ -62,70 +61,61 @@
 <script src="/js/theme.js"></script>
 <script src="/js/auth.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', async () => {
-  const card = document.querySelector('.login-card');
+// Wire up the form immediately — no async delays, no hiding
+const loginForm  = document.getElementById('login-form');
+const loginError = document.getElementById('login-error');
+const loginBtn   = document.getElementById('login-btn');
+const btnText    = document.getElementById('login-btn-text');
+const spinner    = document.getElementById('login-spinner');
 
-  // Show warning if not configured
-  if (!isConfigured()) {
-    document.getElementById('config-warning').style.display = 'block';
-    card.style.opacity = '1';
+// Show Supabase warning if not configured
+if (!isConfigured()) {
+  document.getElementById('config-warning').style.display = 'block';
+}
+
+// Toggle password visibility
+document.getElementById('toggle-password').addEventListener('click', () => {
+  const pw = document.getElementById('password');
+  pw.type = pw.type === 'password' ? 'text' : 'password';
+});
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email    = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+
+  if (!email || !password) {
+    loginError.textContent = 'Please enter your email and password.';
+    loginError.style.display = 'block';
     return;
   }
 
-  // If we landed here because admin auth failed, clear stale session and show form immediately
-  const authFailed = sessionStorage.getItem(DEV27_AUTH.AUTH_FAIL_KEY);
-  if (authFailed) {
-    sessionStorage.removeItem(DEV27_AUTH.AUTH_FAIL_KEY);
-    card.style.opacity = '1';
-    // Setup form below — skip session check entirely
-  } else {
-    // Check if already logged in — redirect silently before revealing card
-    const session = await DEV27_AUTH.getSession();
-    if (session) {
-      window.location.replace('/admin/index.html');
-      return;
-    }
-    card.style.opacity = '1';
+  loginBtn.disabled = true;
+  btnText.textContent = 'Signing in…';
+  spinner.style.display = 'inline-flex';
+  loginError.style.display = 'none';
+
+  const { error } = await DEV27_AUTH.login(email, password);
+  if (error) {
+    loginError.textContent = error.message || 'Invalid email or password.';
+    loginError.style.display = 'block';
+    loginBtn.disabled = false;
+    btnText.textContent = 'Sign In';
+    spinner.style.display = 'none';
   }
-
-  const form = document.getElementById('login-form');
-  const errorEl = document.getElementById('login-error');
-  const loginBtn = document.getElementById('login-btn');
-  const btnText = document.getElementById('login-btn-text');
-  const spinner = document.getElementById('login-spinner');
-
-  // Toggle password visibility
-  document.getElementById('toggle-password').addEventListener('click', () => {
-    const pwInput = document.getElementById('password');
-    pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
-  });
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-
-    if (!email || !password) {
-      errorEl.textContent = 'Please enter your email and password.';
-      errorEl.style.display = 'block';
-      return;
-    }
-
-    loginBtn.disabled = true;
-    btnText.textContent = 'Signing in...';
-    spinner.style.display = 'inline-flex';
-    errorEl.style.display = 'none';
-
-    const { error } = await DEV27_AUTH.login(email, password);
-    if (error) {
-      errorEl.textContent = error.message || 'Invalid email or password. Please try again.';
-      errorEl.style.display = 'block';
-      loginBtn.disabled = false;
-      btnText.textContent = 'Sign In';
-      spinner.style.display = 'none';
-    }
-  });
 });
+
+// Silent background session check — redirect to admin if already logged in
+// Runs after form is wired, so user never sees a blank page
+(async () => {
+  // Clear any stale auth-fail flag
+  sessionStorage.removeItem(DEV27_AUTH.AUTH_FAIL_KEY);
+  if (!isConfigured()) return;
+  try {
+    const session = await DEV27_AUTH.getSession();
+    if (session) window.location.replace('/admin/index.html');
+  } catch (e) { /* ignore — just show the form */ }
+})();
 </script>
 <style>
 @keyframes spin { to { transform: rotate(360deg); } }
