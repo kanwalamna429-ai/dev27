@@ -10,6 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/admin.css">
+  <!-- Anti-flicker: apply dark mode before first paint -->
+  <script>try{var __m=localStorage.getItem('dev27_theme_mode');if(__m==='dark'||(__m===null&&window.matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
+  <style>.login-card{opacity:0;transition:opacity .15s ease}</style>
 </head>
 <body class="admin-login-page">
 
@@ -65,12 +68,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('config-warning').style.display = 'block';
   }
 
-  // Check if already logged in
+  // Check if already logged in — redirect silently before revealing card
   const session = await DEV27_AUTH.getSession();
   if (session) {
-    window.location.href = '/admin/index.html';
+    window.location.replace('/admin/index.html');
     return;
   }
+
+  // Reveal card now that we know the user must log in
+  document.querySelector('.login-card').style.opacity = '1';
 
   const form = document.getElementById('login-form');
   const errorEl = document.getElementById('login-error');
